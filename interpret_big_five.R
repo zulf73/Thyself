@@ -31,11 +31,11 @@ t = c(
   "a high emotional reactiveness and vulnerability to stress. Neuroticism may correlate with perceiving many situations as threatening."
 )
 
-openness_text<-c( "","")
-conscientiousness_text<-c("","")
-extraversion_text<-c("","")
-agreeableness_text<-c("","")
-emotional_stability_text<-c("","")
+openness_text<-c( t[1],t[2])
+conscientiousness_text<-c(t[3],t[4])
+extraversion_text<-c(t[5],t[6])
+agreeableness_text<-c(t[7],t[8])
+emotional_stability_text<-c(t[9],t[10])
 
 interpret<-function( percentile, textblock){
   choose_by_percentile( percentile, textblock )
@@ -43,12 +43,37 @@ interpret<-function( percentile, textblock){
 
 interpret_big_five_vec<-function( v )
 {
-  a1<-interpret(v[1], openness_text)
-  a2<-interpret(v[2], conscientiousness_text )
-  a3<-interpret(v[3], extraversion_text )
-  a4<-interpret(v[4], agreeableness_text )
-  a5<-interpret(v[5], emotional_stability_text )
+  sigma<-sqrt(diag(Sigma))
+  p<-pnorm( (v-mu)/sigma, 0, 1 )
+  a1<-interpret(p[1], openness_text)
+  a2<-interpret(p[2], conscientiousness_text )
+  a3<-interpret(p[3], extraversion_text )
+  a4<-interpret(p[4], agreeableness_text )
+  a5<-interpret(p[5], emotional_stability_text )
 
   c(a1,a2,a3,a4,a5)  
 }
 
+simulate_personality<-function()
+{
+  v<-mvrnorm(n=1,mu,Sigma)
+  d<-interpret_big_five_vec(v)
+  
+  print('-----------------')
+  print('Simulated personality')
+  print(paste('o=',v[1],'c=',v[2],'e=',v[3],
+              'a=',v[4],'s=',v[5]))
+  print('------------------')
+  print("Percentiles")
+  sigma<-sqrt(diag(Sigma))
+  p<-pnorm( (v-mu)/sigma, 0, 1 )
+  print(paste('o=',p[1],'c=',p[2],'e=',p[3],
+              'a=',p[4],'s=',p[5]))
+  
+  print(paste('Openness:',d[1]))
+  print(paste('Conscientiousness:',d[2]))
+  print(paste('Extraversion:',d[3]))
+  print(paste('Agreeableness:',d[4]))
+  print(paste('Stability:',d[5]))
+  
+}
