@@ -31,11 +31,11 @@ t = c(
   "a high emotional reactiveness and vulnerability to stress. Neuroticism may correlate with perceiving many situations as threatening."
 )
 
-openness_text<-c( t[1],t[2])
-conscientiousness_text<-c(t[3],t[4])
-extraversion_text<-c(t[5],t[6])
-agreeableness_text<-c(t[7],t[8])
-emotional_stability_text<-c(t[9],t[10])
+openness_text<-c( t[2],t[1])
+conscientiousness_text<-c(t[4],t[3])
+extraversion_text<-c(t[6],t[5])
+agreeableness_text<-c(t[8],t[7])
+emotional_stability_text<-c(t[10],t[9])
 
 interpret<-function( percentile, textblock){
   choose_by_percentile( percentile, textblock )
